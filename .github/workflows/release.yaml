@@ -18,16 +18,13 @@ jobs:
           fetch-depth: 0
 
       - name: Conventional Changelog Action
-        id: changelog
-        uses: TriPSs/conventional-changelog-action@v3
-        with:
-          skip-git-pull: "true"
-          preset: 'angular'
-          output-file: "false"
-          skip-commit: true
-          skip-tag: true
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@{latest-release}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          toTag: ${{ github.ref }}
 
       - name: Upload Github Release
-        run: gh release create "${GITHUB_REF}" --notes-file "${{ steps.changelog.outputs.clean_changelog }}"
+        run: gh release create "${GITHUB_REF}" --notes-file "${{steps.build_changelog.outputs.changelog}}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
