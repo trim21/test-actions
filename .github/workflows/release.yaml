@@ -25,6 +25,6 @@ jobs:
           tag: ${{ github.ref_name }}
 
       - name: Upload Github Release
-        run: gh release create "${GITHUB_REF}" --notes-file "${{ steps.changelog.outputs.clean_changelog }}"
+        run: gh release create "${GITHUB_REF}" --notes-file CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
