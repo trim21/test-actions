@@ -26,6 +26,7 @@ jobs:
           writeToFile: false
 
       - name: Upload Github Release
-        run: gh release create "${GITHUB_REF}" --notes "${{ steps.changelog.outputs.changes }}"
+        run: gh release create "${GITHUB_REF}" --notes "${CHANGELOG}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CHANGELOG: "${{ steps.changelog.outputs.changes }}"
