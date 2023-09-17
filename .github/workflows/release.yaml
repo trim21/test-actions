@@ -17,12 +17,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: seasonalmatcha/conventional-commit-changelog@latest
+      - name: Update CHANGELOG
         id: changelog
+        uses: requarks/changelog-action@v1
         with:
-          to: ${{ github.ref }}
+          token: ${{ github.token }}
+          tag: ${{ github.ref_name }}
 
       - name: Upload Github Release
-        run: gh release create "${GITHUB_REF}" --notes-file "${{steps.build_changelog.outputs.changelog}}"
+        run: gh release create "${GITHUB_REF}" --notes-file "${{ steps.changelog.outputs.clean_changelog }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
