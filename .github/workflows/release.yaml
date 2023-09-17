@@ -17,16 +17,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-
-      - uses: trim21/setup-poetry@dist/v1
-
-      - run: poetry publish --build
-        env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
-
       - name: Conventional Changelog Action
         id: changelog
         uses: TriPSs/conventional-changelog-action@v3
